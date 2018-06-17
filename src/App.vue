@@ -2,7 +2,7 @@
   <div id="app">
     <section class="main_content">
 
-      <HeadBox @change="matchData"></HeadBox>
+      <HeadBox @change="e => this.serchBar.inputText=e"></HeadBox>
       <div class="bg">
         <div class="aside">
           <div class="aside_box">
@@ -75,6 +75,9 @@ export default {
       initData: [], // 原始資料
       copyData: [], // 依照條件篩選後的資料
       filterData: [], // 要顯示在畫面上的資料
+      serchBar: {
+        inputText: '',
+      },
       location: { // 地區下拉選單
         selectValue: '', // 選擇的值
         options: [], // 總共選項
@@ -96,6 +99,12 @@ export default {
       deep: true,
     },
     checkbox: {
+      handler() {
+        this.matchData();
+      },
+      deep: true,
+    },
+    serchBar: {
       handler() {
         this.matchData();
       },
@@ -124,7 +133,7 @@ export default {
     initCopyData() {
       this.loading = true;
       this.copyData = [...this.initData];
-      this.filterData = [...this.initData];
+      this.filterData = [...this.copyData];
       this.resetTableDataWithPageNo(1);
     },
 
@@ -143,14 +152,14 @@ export default {
     },
 
     // 根據 地區 搜尋bar過濾資料
-    matchData(serchBarValue) {
+    matchData() {
       this.initCopyData();
 
       if (this.location.selectValue) {
         this.filterDataByOptions('Zone', this.location.selectValue);
       }
-      if (serchBarValue) {
-        this.filterDataByOptions('Name', serchBarValue);
+      if (this.serchBar.inputText) {
+        this.filterDataByOptions('Name', this.serchBar.inputText);
       }
       if (this.checkbox.checkedOptions.length) {
         const catchArr = [];

@@ -56,22 +56,19 @@ export default {
   },
 
   methods: {
+    /* eslint-disable */
     genMap([id, title, pic, address], point) {
       const vm = this;
-      // eslint-disable-next-line
       this.google.map = new google.maps.Map(document.getElementById(`${id}map`), {
         center: point,
         zoom: 18,
       });
-      // eslint-disable-next-line
       this.google.marker = new google.maps.Marker({
         position: point,
         map: vm.google.map,
-        // eslint-disable-next-line
         animation: google.maps.Animation.DROP,
       });
       this.google.marker.setMap(this.google.map);
-      // eslint-disable-next-line
       // this.google.infoWindow = new google.maps.InfoWindow({
       //   content: `
       //     <div>${title} <a href='https://www.google.com/maps/place/${address}'  target='_blank'></div>

@@ -4,7 +4,7 @@
       <div>高雄景點查詢</div>
     </div>
     <div class="searchBar">
-      <el-input placeholder="請輸入景點名稱" prefix-icon="el-icon-search"
+      <el-input placeholder="請輸入景點名稱" prefix-icon="el-icon-search" clearable
         v-model="serchBarText" @change="inputChange"/>
     </div>
   </header>
@@ -48,7 +48,7 @@ export default {
         z-index: 1;
         max-width: 350px;
         font-size: 20px;
-        color: rgba(255, 255, 255, 0.918);
+        color: rgba(31, 22, 22, 0.918);
         // background: none;
       }
     }
