@@ -18,7 +18,7 @@
           <div class="bottom_box">
             <el-popover placement="top" width="350" trigger="click">
               <div class='mapbox'>
-                <div :id='`${d._id}map`' style="clear:both;min-height:400px;max-height:800px;"></div>
+                <div :id='`${d._id}map`' class='mapStyle' style="clear:both;min-height:450px;max-height:800px;"></div>
               </div>
               <div class="address el-icon-news" slot="reference"
                   @click="genMap([d._id,d.Name,d.Picture1,d.Add],{lat: +d.Py,lng: +d.Px})">
@@ -64,21 +64,20 @@ export default {
       const vm = this;
       this.google.map = new google.maps.Map(document.getElementById(`${id}map`), {
         center: point,
-        zoom: 18,
+        zoom: 17,
       });
       this.google.marker = new google.maps.Marker({
         position: point,
         map: vm.google.map,
         animation: google.maps.Animation.DROP,
       });
-      this.google.marker.setMap(this.google.map);
-      // this.google.infoWindow = new google.maps.InfoWindow({
-      //   content: `
-      //     <div>${title} <a href='https://www.google.com/maps/place/${address}'  target='_blank'></div>
-      //     <img src='${pic}'/>
-      //   `,
-      // });
-      // this.google.infowindow.open(this.google.map, this.google.marker);
+      // this.google.marker.setMap(this.google.map);
+      new google.maps.InfoWindow({
+        content: `
+          <div>${title} <a href='https://www.google.com/maps/place/${address}'  target='_blank'></div>
+          <img src='${pic}' style="max-height:120px;"/>
+        `,
+      }).open(this.google.map, this.google.marker);
     },
   },
 };

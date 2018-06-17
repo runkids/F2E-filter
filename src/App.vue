@@ -177,6 +177,7 @@ export default {
 
     tagClose(index) {
       this.checkbox.checkedOptions.splice(index, 1);
+      this.handleCheckedOptionsChange(this.checkbox.checkedOptions);
     },
 
     handleCheckAllChange(checkAll) {
