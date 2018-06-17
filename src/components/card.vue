@@ -12,7 +12,9 @@
               {{d.Ticketinfo}}
             </el-tag>
           </div>
+
           <div class='desc'>{{d.Toldescribe}}</div>
+
           <div class="bottom_box">
             <el-popover placement="top" width="350" trigger="click">
               <div class='mapbox'>
@@ -29,6 +31,7 @@
             <div class="openTime el-icon-time"> {{d.Opentime}}</div>
             <div class="tel el-icon-phone-outline"> {{d.Tel}}</div>
           </div>
+
         </div>
       </div>
     </el-card>
@@ -84,10 +87,11 @@ export default {
 <style lang="scss">
 @import '../assets/mixin.scss';
 .is-hover-shadow{
-    position: relative;
-    transition-duration: 0.6s;
+  cursor: pointer;
+  position: relative;
+  transition-duration: 0.6s;
   &:hover{
-    bottom: 7px;
+    bottom: 5px;
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.418)!important;
     transition: all 600ms cubic-bezier(0.455, 0.03, 0.515, 0.955); 
   }
@@ -155,6 +159,9 @@ export default {
             margin-top:15px;
             display: flex;
             flex-direction: column;
+            .options_tag{
+              margin-left: 0 ;
+            }
           }
           .pic{
             border: 2px solid #00000094;

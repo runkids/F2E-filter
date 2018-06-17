@@ -8,7 +8,7 @@
           <div class="aside_box">
             <div class="box_content">
               <div class="text">地區</div>
-              <el-select v-model="location.selectValue"
+              <el-select v-model="location.selectValue" style='width:300px;'
                         clearable
                         placeholder="請選擇地區"
                         no-data-text='無資訊'>
@@ -24,7 +24,7 @@
                <el-checkbox-group v-model="checkbox.checkedOptions"
                                   @change="handleCheckedOptionsChange">
                 <div v-for="item in checkbox.options" :key="item">
-                  <el-checkbox :label="item" >{{item}}</el-checkbox>
+                  <el-checkbox :label="item" >{{item.length>10?`${item.substring(0,10)}...`:item}}</el-checkbox>
                 </div>
                </el-checkbox-group>
             </div>
@@ -38,7 +38,7 @@
           </div>
           <div class='tags_box'>
             <el-tag class='options_tag' v-for="(tag,index) in checkbox.checkedOptions"
-              :key="tag" closable  @close="checkbox.checkedOptions.splice(index, 1) ">
+              :key="tag" closable  @close="tagClose(index)">
               {{tag}}
             </el-tag>
           </div>
@@ -175,13 +175,18 @@ export default {
       this.resetTableDataWithPageNo(1);
     },
 
-    handleCheckAllChange(val) {
-      this.checkbox.checkedOptions = val ? this.checkbox.options : [];
+    tagClose(index) {
+      this.checkbox.checkedOptions.splice(index, 1);
+    },
+
+    handleCheckAllChange(checkAll) {
+      // 要assign一個新的 options 給 checkedOptions ， 否則呼叫tagClose時會真的把options的選項也跟著刪掉（因為Reference的問題）
+      this.checkbox.checkedOptions = checkAll ? [...this.checkbox.options] : [];
       this.checkbox.isIndeterminate = false;
     },
 
-    handleCheckedOptionsChange(val) {
-      const checkedCount = val.length;
+    handleCheckedOptionsChange(options) {
+      const checkedCount = options.length;
       this.checkbox.checkAll = checkedCount === this.checkbox.options.length;
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.checkbox.options.length;
     },
@@ -209,15 +214,14 @@ export default {
 
       .bg{
         display: flex;
-
         .aside{
           @include wh(20%,100%);
+          background: #ebebeb;
 
           .aside_box{
             @include wh(100%,127px);
             display: flex;
             flex-direction: column;
-            background: #ebebeb;
             border-bottom: 1px solid #929191;
             .box_content{
               margin: auto;
@@ -231,7 +235,7 @@ export default {
 
           }
           .tags{
-            height: 250px;
+            min-height: 300px;
             .el-checkbox{
               margin: 5px ;
             }
@@ -279,8 +283,6 @@ export default {
       }
       .main{
         min-width: 414px;
-        .card{
-        }
         .pagination{
           position: relative;
           padding-bottom: 30px;

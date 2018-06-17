@@ -89,4 +89,9 @@ export default {
       }
     }
   }
+  @media screen and (max-width: 450px){
+    .toTop{
+      transform: scale(0.7);
+    }
+  }
 </style>
