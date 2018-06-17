@@ -1,11 +1,16 @@
 <template>
   <div>
-    <button class='toTop' @click="scrollToTop(1000);">top</button>
+    <button class='toTop' v-if="!isTop" @click="scrollToTop(1000);"></button>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      pointer: null,
+    };
+  },
   methods: {
     scrollToTop(scrollDuration) {
       const cosParameter = window.scrollY / 2;
@@ -21,14 +26,30 @@ export default {
       }
       window.requestAnimationFrame(step);
     },
+    checkPoint() {
+      this.pointer = window.scrollY;
+    },
+  },
+  computed: {
+    isTop() {
+      return this.pointer < 250;
+    },
+  },
+
+  created() {
+    window.addEventListener('scroll', this.checkPoint);
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.checkPoint);
   },
 };
 </script>
 
 <style lang="scss">
   .toTop{
-    height: 50px;
-    width: 50px;
+    z-index: 99;
+    height: 55px;
+    width: 55px;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.658);
     color: white;
@@ -37,5 +58,35 @@ export default {
     bottom: 100px;
     cursor: pointer;
     outline: 0;
+    &::after{
+      content: '';
+      display: block;
+      width: 10px;
+      height: 25px;
+      border: 2px solid white;
+      border-radius: 10px;
+      margin: 0 auto;
+    }
+    &::before{
+      content: '';
+      display: block;
+      width: 0px;
+      height: 10px;
+      border: 1px solid white;
+      border-radius: 10px;
+      left: 49%;
+      position: absolute;
+      animation: 2s top infinite;
+    }
+    @keyframes top {
+      0%{
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100%{
+         opacity: 1;
+        transform: translateY(0px);
+      }
+    }
   }
 </style>

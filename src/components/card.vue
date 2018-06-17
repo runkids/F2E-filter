@@ -83,7 +83,15 @@ export default {
 
 <style lang="scss">
 @import '../assets/mixin.scss';
-
+.is-hover-shadow{
+    position: relative;
+    transition-duration: 0.6s;
+  &:hover{
+    bottom: 7px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.418)!important;
+    transition: all 600ms cubic-bezier(0.455, 0.03, 0.515, 0.955); 
+  }
+}
 .el-card{
   letter-spacing: 1px;
   min-height: 250px;
@@ -118,7 +126,7 @@ export default {
           cursor: pointer;
         }
         [class*=" el-icon-"]{
-          margin-bottom: 5px;
+          margin-bottom: 10px;
         }
       }
     }

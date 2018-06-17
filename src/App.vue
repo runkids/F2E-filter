@@ -11,7 +11,7 @@
               <el-select v-model="location.selectValue"
                         clearable
                         placeholder="請選擇地區"
-                        no-data-text='無資訊' size='medium'>
+                        no-data-text='無資訊'>
                  <el-option v-for="item in location.options" :key="item.id" :label="item.value" :value="item.value"/>
               </el-select>
             </div>
@@ -31,10 +31,10 @@
           </div>
         </div>
 
-        <div class="main" v-loading="loading">
+        <div class="main">
           <ScrollTopButton/>
           <div class="dataLength">
-            共有 {{copyData.length}} 筆資料
+            共有 <AnimatedInteger :value="copyData.length"></AnimatedInteger> 筆資料
           </div>
           <div class='tags_box'>
             <el-tag class='options_tag' v-for="(tag,index) in checkbox.checkedOptions"
@@ -42,7 +42,7 @@
               {{tag}}
             </el-tag>
           </div>
-          <div class="cards">
+          <div class="cards" v-loading="loading">
             <Card :openData.sync="filterData"></Card>
           </div>
           <Pagination :length="copyData.length" class="pagination"
@@ -59,6 +59,7 @@ import HeadBox from '@/components/head';
 import Card from '@/components/card';
 import Pagination from '@/components/pagination';
 import ScrollTopButton from '@/components/scrollTopButton';
+import AnimatedInteger from '@/components/animatedInteger';
 import getData from '@/api/openData';
 
 export default {
@@ -68,6 +69,7 @@ export default {
     Pagination,
     Card,
     ScrollTopButton,
+    AnimatedInteger,
   },
   data() {
     return {
@@ -144,7 +146,7 @@ export default {
       this.filterData = this.copyData.filter(checkFnc);
       setTimeout(() => {
         this.loading = false;
-      }, 600);
+      }, 500);
     },
 
     filterDataByOptions(key, value) {
@@ -198,6 +200,7 @@ export default {
   @import './assets/mixin.scss';
 
   html,body {
+    font-family: 'Roboto', sans-serif, '微軟正黑體';
     box-sizing: border-box;
     // border: 1px solid black;
     .main_content {
@@ -223,7 +226,7 @@ export default {
             }
             .text{
               font-size: 20px;
-              margin: 20px;
+              margin: 20px 20px 20px 0px;
             }
 
           }
@@ -242,7 +245,8 @@ export default {
           .dataLength{
             margin: 20px 0 0 40px;
             font-size: 24px;
-            color: #000000;
+            font-weight: 500;
+            color: #4a90e2;
           }
           .tags_box{
             min-height: 50px;
