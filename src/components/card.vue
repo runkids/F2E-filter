@@ -7,7 +7,7 @@
         </div>
         <div class='info'>
           <div class='top_box'>
-            <div class='title'>{{d.Name}}</div>
+            <div class='title' v-html="d.Name"></div>
             <el-tag class="options_tag" v-if='d.Ticketinfo'>
               {{d.Ticketinfo}}
             </el-tag>
@@ -23,9 +23,9 @@
               <div class="address el-icon-news" slot="reference"
                   @click="genMap([d._id,d.Name,d.Picture1,d.Add],{lat: +d.Py,lng: +d.Px})">
                  {{d.Add}}
-                 <el-tooltip effect="dark" content="點擊顯示地圖位置" placement="right-start">
-                  <img src='https://goo.gl/w8NN6B' style="width:20px;">
-                 </el-tooltip>
+                  <el-tooltip effect="dark" content="點擊顯示地圖位置" placement="right-start">
+                    <img src='https://goo.gl/w8NN6B' style="width:20px;transform:translateY(4px)">
+                  </el-tooltip>
               </div>
             </el-popover>
             <div class="openTime el-icon-time"> {{d.Opentime}}</div>
@@ -89,10 +89,10 @@ export default {
   cursor: pointer;
   position: relative;
   transition-duration: 0.6s;
+  box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.418)!important;
+  transition: all 600ms cubic-bezier(0.455, 0.03, 0.515, 0.955); 
   &:hover{
-    bottom: 5px;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.418)!important;
-    transition: all 600ms cubic-bezier(0.455, 0.03, 0.515, 0.955); 
+    bottom: 3px;
   }
 }
 .el-card{
@@ -112,7 +112,7 @@ export default {
         }
         .title{
           font-size: 24px;
-          color: rgb(19, 113, 254);
+          color: #4a90e2;
           line-height: 36px;
         }
       }

@@ -51,6 +51,7 @@ export default {
     height: 55px;
     width: 55px;
     position: fixed;
+    border: rgba(0, 0, 0, 0.658);
     background-color: rgba(0, 0, 0, 0.658);
     color: white;
     border-radius: 100px;
@@ -91,7 +92,8 @@ export default {
   }
   @media screen and (max-width: 450px){
     .toTop{
-      transform: scale(0.7);
+      bottom: 80px;
+      transform: translateX(5px) scale(0.7);
     }
   }
 </style>

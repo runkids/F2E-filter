@@ -8,7 +8,7 @@
           <div class="aside_box">
             <div class="box_content">
               <div class="text">地區</div>
-              <el-select v-model="location.selectValue" style='width:300px;'
+              <el-select v-model="location.selectValue" class='localSelect'
                         clearable
                         placeholder="請選擇地區"
                         no-data-text='無資訊'>
@@ -18,7 +18,7 @@
           </div>
           <div class="aside_box tags">
             <div class="box_content">
-              <div class="text">標籤</div>
+              <div class="text">票價資訊</div>
               <el-checkbox  :indeterminate="checkbox.isIndeterminate" v-model="checkbox.checkAll"
                             @change="handleCheckAllChange">全選</el-checkbox>
                <el-checkbox-group v-model="checkbox.checkedOptions"
@@ -118,7 +118,7 @@ export default {
     // 初始化資料
     async getOpenData() {
       const { result: { records } } = await getData();
-
+      // Array.form()
       this.checkbox.options = [...new Set(records.map(data => data.Ticketinfo))]
         .filter(res => !!res);
 
@@ -134,8 +134,11 @@ export default {
     // 重置資料
     initCopyData() {
       this.loading = true;
-      this.copyData = [...this.initData];
-      this.filterData = [...this.copyData];
+      // 要深層拷貝 Object.assign僅複製屬性值
+      // 也可以用lodash _.cloneDeep
+      // https://goo.gl/iJliSK
+      this.copyData = JSON.parse(JSON.stringify(this.initData));
+      this.filterData = JSON.parse(JSON.stringify(this.copyData));
       this.resetTableDataWithPageNo(1);
     },
 
@@ -153,6 +156,13 @@ export default {
       this.copyData = this.copyData.filter(res => res[key].match(value));
     },
 
+    // 搜尋bar結果的關鍵字加上顏色
+    addColorForKeyWords(value) {
+      this.copyData.forEach((item) => {
+        item.Name = item.Name.replace(value, `<span style='color:#fd6769;'>${value}</span>`);
+      });
+    },
+
     // 根據 地區 搜尋bar過濾資料
     matchData() {
       this.initCopyData();
@@ -162,6 +172,7 @@ export default {
       }
       if (this.serchBar.inputText) {
         this.filterDataByOptions('Name', this.serchBar.inputText);
+        this.addColorForKeyWords(this.serchBar.inputText);
       }
       if (this.checkbox.checkedOptions.length) {
         const catchArr = [];
@@ -216,7 +227,8 @@ export default {
       .bg{
         display: flex;
         .aside{
-          @include wh(20%,100%);
+          flex: 1; //這樣可以跟右邊main區塊等高顯示
+          @include wh(20%,auto); //height auto這樣可以跟右邊main區塊等高顯示
           background: #ebebeb;
 
           .aside_box{
@@ -241,10 +253,14 @@ export default {
               margin: 5px ;
             }
           }
+          .localSelect{
+            width:220px;
+          }
 
         }
 
         .main{
+          flex: 4;
           @include wh(80%,100%);
           min-height: 1080px;
           .dataLength{
@@ -281,6 +297,9 @@ export default {
       display: block !important;
       .aside{
         min-width: 414px;
+        .localSelect{
+          width:340px !important;
+        }
       }
       .main{
         min-width: 414px;
