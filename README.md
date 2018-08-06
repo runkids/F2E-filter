@@ -6,3 +6,4 @@
 -   ### Vue.js
 -   ### element UI
 -   ### Google Map Api
+-   ### Image Lazy loading (https://github.com/runkids/Imagvue)

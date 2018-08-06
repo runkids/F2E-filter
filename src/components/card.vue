@@ -3,7 +3,9 @@
     <el-card shadow="hover" v-for="d in arr" :key="d.Id">
       <div class='card_content'>
         <div class='pic' >
-          <img :src="d.Picture1">
+          <imagvue v-model="d.Picture1">
+            <transition-group :src="require('../assets/loading.gif')" :lazy="100"></transition-group>
+          </imagvue>
         </div>
         <div class='info'>
           <div class='top_box'>
@@ -38,8 +40,14 @@
   </div>
 </template>
 <script>
+import imagvue from 'imagvue';
+
 export default {
   props: ['openData'],
+
+  components: {
+    imagvue,
+  },
 
   data() {
     return {
