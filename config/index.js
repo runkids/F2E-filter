@@ -50,7 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist/f2e/week2'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/f2e/week2',
+    assetsPublicPath: '/f2e/week2/',
 
     /**
      * Source Maps

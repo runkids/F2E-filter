@@ -3,8 +3,11 @@
     <el-card shadow="hover" v-for="d in arr" :key="d.Id">
       <div class='card_content'>
         <div class='pic' >
-          <imagvue v-model="d.Picture1">
-            <transition-group :src="require('../assets/loading.gif')" :lazy="100"></transition-group>
+          <imagvue v-model="d.Picture1" :filters="false">
+            <transition-group
+              :src="require('../assets/loading.gif')"
+              :lazy="300">
+            </transition-group>
           </imagvue>
         </div>
         <div class='info'>
